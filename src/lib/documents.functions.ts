@@ -221,5 +221,5 @@ export const toggleVerification = createServerFn({ method: "POST" })
       .update({ structured_data: next as never })
       .eq("id", data.documentId);
     if (uErr) throw new Error(uErr.message);
-    return { verifications: v };
+    return { verifications };
   });

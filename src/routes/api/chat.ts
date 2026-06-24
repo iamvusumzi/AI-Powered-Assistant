@@ -67,7 +67,7 @@ export const Route = createFileRoute("/api/chat")({
         const result = streamText({
           model: provider("google/gemini-3-flash-preview"),
           system,
-          messages: convertToModelMessages(messages),
+          messages: await convertToModelMessages(messages),
         });
 
         return result.toUIMessageStreamResponse({
