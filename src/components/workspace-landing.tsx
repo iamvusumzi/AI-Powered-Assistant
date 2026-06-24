@@ -68,7 +68,7 @@ export function WorkspaceLanding() {
           Maximize Your Workplace <span className="text-brand">Velocity</span>.
         </h1>
         <p className="mt-4 text-lg text-muted-foreground md:text-xl">
-          Transform chaotic meeting logs and dense articles into structured action items instantly.
+          Turn raw meeting transcripts and dense articles into ready-to-send emails and client-ready briefs in two clicks.
         </p>
       </div>
 
