@@ -3,7 +3,7 @@ import { supabase } from "@/integrations/supabase/client";
 import { useTheme } from "next-themes";
 import { Button } from "@/components/ui/button";
 import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from "@/components/ui/sheet";
-import { Sparkles, Moon, Sun, LogOut, MessageSquare, FileText, BookOpen, Settings, Menu } from "lucide-react";
+import { Sparkles, Moon, Sun, LogOut, LayoutDashboard, FileText, BookOpen, Settings, Menu } from "lucide-react";
 import { useEffect, useState } from "react";
 
 export const Route = createFileRoute("/_authenticated")({
@@ -17,7 +17,7 @@ export const Route = createFileRoute("/_authenticated")({
 });
 
 const NAV = [
-  { to: "/", label: "Workspace", icon: MessageSquare, exact: true },
+  { to: "/", label: "Dashboard", icon: LayoutDashboard, exact: true },
   { to: "/meetings", label: "Meetings", icon: FileText, exact: false },
   { to: "/research", label: "Research", icon: BookOpen, exact: false },
   { to: "/settings", label: "Settings", icon: Settings, exact: false },
