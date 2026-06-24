@@ -212,13 +212,13 @@ export const toggleVerification = createServerFn({ method: "POST" })
       .eq("id", data.documentId)
       .single();
     if (error) throw new Error(error.message);
-    const sd = (doc.structured_data ?? {}) as { tasks?: unknown[]; verifications?: Record<string, boolean> };
-    const v = { ...(sd.verifications ?? {}) };
-    v[data.taskId] = !v[data.taskId];
-    const next = { ...sd, verifications: v };
+    const sd = (doc.structured_data ?? {}) as Record<string, unknown>;
+    const verifications = { ...((sd.verifications as Record<string, boolean> | undefined) ?? {}) };
+    verifications[data.taskId] = !verifications[data.taskId];
+    const next = { ...sd, verifications };
     const { error: uErr } = await context.supabase
       .from("processed_documents")
-      .update({ structured_data: next })
+      .update({ structured_data: next as never })
       .eq("id", data.documentId);
     if (uErr) throw new Error(uErr.message);
     return { verifications: v };
