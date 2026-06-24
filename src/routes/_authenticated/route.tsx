@@ -7,8 +7,8 @@ import { Sparkles, Moon, Sun, LogOut, MessageSquare, FileText, BookOpen, Setting
 import { useEffect, useState } from "react";
 
 export const Route = createFileRoute("/_authenticated")({
+  ssr: false,
   beforeLoad: async () => {
-    if (typeof window === "undefined") return {};
     const { data, error } = await supabase.auth.getUser();
     if (error || !data.user) throw redirect({ to: "/auth" });
     return { user: data.user };
