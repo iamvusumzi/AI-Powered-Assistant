@@ -17,10 +17,10 @@ export const Route = createFileRoute("/_authenticated")({
 });
 
 const NAV = [
-  { to: "/workspace", label: "Workspace", icon: MessageSquare },
-  { to: "/meetings", label: "Meetings", icon: FileText },
-  { to: "/research", label: "Research", icon: BookOpen },
-  { to: "/settings", label: "Settings", icon: Settings },
+  { to: "/", label: "Workspace", icon: MessageSquare, exact: true },
+  { to: "/meetings", label: "Meetings", icon: FileText, exact: false },
+  { to: "/research", label: "Research", icon: BookOpen, exact: false },
+  { to: "/settings", label: "Settings", icon: Settings, exact: false },
 ] as const;
 
 function AuthedShell() {
