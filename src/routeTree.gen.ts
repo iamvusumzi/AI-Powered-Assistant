@@ -18,6 +18,7 @@ import { Route as AuthenticatedWorkspaceRouteImport } from './routes/_authentica
 import { Route as AuthenticatedSettingsRouteImport } from './routes/_authenticated/settings'
 import { Route as AuthenticatedResearchRouteImport } from './routes/_authenticated/research'
 import { Route as AuthenticatedMeetingsRouteImport } from './routes/_authenticated/meetings'
+import { Route as AuthenticatedWorkspaceIndexRouteImport } from './routes/_authenticated/workspace.index'
 import { Route as AuthenticatedWorkspaceConversationIdRouteImport } from './routes/_authenticated/workspace.$conversationId'
 
 const AuthRoute = AuthRouteImport.update({
@@ -64,6 +65,12 @@ const AuthenticatedMeetingsRoute = AuthenticatedMeetingsRouteImport.update({
   path: '/meetings',
   getParentRoute: () => AuthenticatedRouteRoute,
 } as any)
+const AuthenticatedWorkspaceIndexRoute =
+  AuthenticatedWorkspaceIndexRouteImport.update({
+    id: '/',
+    path: '/',
+    getParentRoute: () => AuthenticatedWorkspaceRoute,
+  } as any)
 const AuthenticatedWorkspaceConversationIdRoute =
   AuthenticatedWorkspaceConversationIdRouteImport.update({
     id: '/$conversationId',
@@ -81,6 +88,7 @@ export interface FileRoutesByFullPath {
   '/api/chat': typeof ApiChatRoute
   '/api/process-document': typeof ApiProcessDocumentRoute
   '/workspace/$conversationId': typeof AuthenticatedWorkspaceConversationIdRoute
+  '/workspace/': typeof AuthenticatedWorkspaceIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -88,10 +96,10 @@ export interface FileRoutesByTo {
   '/meetings': typeof AuthenticatedMeetingsRoute
   '/research': typeof AuthenticatedResearchRoute
   '/settings': typeof AuthenticatedSettingsRoute
-  '/workspace': typeof AuthenticatedWorkspaceRouteWithChildren
   '/api/chat': typeof ApiChatRoute
   '/api/process-document': typeof ApiProcessDocumentRoute
   '/workspace/$conversationId': typeof AuthenticatedWorkspaceConversationIdRoute
+  '/workspace': typeof AuthenticatedWorkspaceIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -105,6 +113,7 @@ export interface FileRoutesById {
   '/api/chat': typeof ApiChatRoute
   '/api/process-document': typeof ApiProcessDocumentRoute
   '/_authenticated/workspace/$conversationId': typeof AuthenticatedWorkspaceConversationIdRoute
+  '/_authenticated/workspace/': typeof AuthenticatedWorkspaceIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -118,6 +127,7 @@ export interface FileRouteTypes {
     | '/api/chat'
     | '/api/process-document'
     | '/workspace/$conversationId'
+    | '/workspace/'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -125,10 +135,10 @@ export interface FileRouteTypes {
     | '/meetings'
     | '/research'
     | '/settings'
-    | '/workspace'
     | '/api/chat'
     | '/api/process-document'
     | '/workspace/$conversationId'
+    | '/workspace'
   id:
     | '__root__'
     | '/'
@@ -141,6 +151,7 @@ export interface FileRouteTypes {
     | '/api/chat'
     | '/api/process-document'
     | '/_authenticated/workspace/$conversationId'
+    | '/_authenticated/workspace/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -216,6 +227,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedMeetingsRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
+    '/_authenticated/workspace/': {
+      id: '/_authenticated/workspace/'
+      path: '/'
+      fullPath: '/workspace/'
+      preLoaderRoute: typeof AuthenticatedWorkspaceIndexRouteImport
+      parentRoute: typeof AuthenticatedWorkspaceRoute
+    }
     '/_authenticated/workspace/$conversationId': {
       id: '/_authenticated/workspace/$conversationId'
       path: '/$conversationId'
@@ -228,12 +246,14 @@ declare module '@tanstack/react-router' {
 
 interface AuthenticatedWorkspaceRouteChildren {
   AuthenticatedWorkspaceConversationIdRoute: typeof AuthenticatedWorkspaceConversationIdRoute
+  AuthenticatedWorkspaceIndexRoute: typeof AuthenticatedWorkspaceIndexRoute
 }
 
 const AuthenticatedWorkspaceRouteChildren: AuthenticatedWorkspaceRouteChildren =
   {
     AuthenticatedWorkspaceConversationIdRoute:
       AuthenticatedWorkspaceConversationIdRoute,
+    AuthenticatedWorkspaceIndexRoute: AuthenticatedWorkspaceIndexRoute,
   }
 
 const AuthenticatedWorkspaceRouteWithChildren =
