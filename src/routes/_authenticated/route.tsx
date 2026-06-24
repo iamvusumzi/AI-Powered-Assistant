@@ -44,7 +44,7 @@ function AuthedShell() {
   const NavList = ({ onItemClick }: { onItemClick?: () => void }) => (
     <nav className="flex-1 space-y-1 p-3">
       {NAV.map((item) => {
-        const active = pathname.startsWith(item.to);
+        const active = item.exact ? pathname === item.to : pathname.startsWith(item.to);
         return (
           <Link
             key={item.to}
