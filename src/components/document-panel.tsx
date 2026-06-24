@@ -1,6 +1,9 @@
 import ReactMarkdown from "react-markdown";
 import { VerifyBadge } from "./verify-badge";
-import { AlertTriangle } from "lucide-react";
+import { EmailGeneratorButton, PdfExportButton } from "./document-actions";
+import { Button } from "@/components/ui/button";
+import { AlertTriangle, Copy } from "lucide-react";
+import { toast } from "sonner";
 
 type Task = { id: string; task: string; owner?: string; due?: string };
 
@@ -19,6 +22,11 @@ export function DocumentPanel({
   verifications: Record<string, boolean>;
   documentId: string;
 }) {
+  const copySummary = async () => {
+    await navigator.clipboard.writeText(summary);
+    toast.success("Summary copied");
+  };
+
   return (
     <div className="flex h-full flex-col">
       <div className="border-b px-6 py-4">
@@ -27,8 +35,21 @@ export function DocumentPanel({
             {type === "meeting_notes" ? "Meeting Notes" : "Research"}
           </span>
         </div>
-        <h1 className="mt-2 text-2xl font-bold tracking-tight">{title}</h1>
+        <div className="mt-2 flex flex-wrap items-center justify-between gap-3">
+          <h1 className="text-2xl font-bold tracking-tight">{title}</h1>
+          <div className="flex flex-wrap items-center gap-2">
+            <Button size="sm" variant="outline" onClick={copySummary}>
+              <Copy className="mr-1.5 h-3.5 w-3.5" /> Copy
+            </Button>
+            {type === "meeting_notes" ? (
+              <EmailGeneratorButton title={title} summary={summary} tasks={tasks} />
+            ) : (
+              <PdfExportButton title={title} summary={summary} />
+            )}
+          </div>
+        </div>
       </div>
+
 
       <div className="flex-1 overflow-y-auto px-6 py-6">
         <article className="prose-velocity max-w-3xl">
