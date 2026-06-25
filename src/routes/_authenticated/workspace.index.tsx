@@ -29,7 +29,7 @@ function WorkspaceEmpty() {
       </p>
 
       <Button asChild size="lg" className="mt-6">
-        <Link to="/">
+        <Link to="/dashboard">
           <Plus className="mr-2 h-4 w-4" /> Start New Analysis
         </Link>
       </Button>

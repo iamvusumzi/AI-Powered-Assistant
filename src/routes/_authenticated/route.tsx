@@ -8,16 +8,17 @@ import { useEffect, useState } from "react";
 
 export const Route = createFileRoute("/_authenticated")({
   ssr: false,
-  beforeLoad: async () => {
+  beforeLoad: async ({ location }) => {
     const { data, error } = await supabase.auth.getUser();
     if (error || !data.user) throw redirect({ to: "/auth" });
+    if (location.pathname === "/") throw redirect({ to: "/dashboard" });
     return { user: data.user };
   },
   component: AuthedShell,
 });
 
 const NAV = [
-  { to: "/", label: "Dashboard", icon: LayoutDashboard, exact: true },
+  { to: "/dashboard", label: "Dashboard", icon: LayoutDashboard, exact: true },
   { to: "/meetings", label: "Meetings", icon: FileText, exact: false },
   { to: "/research", label: "Research", icon: BookOpen, exact: false },
   { to: "/settings", label: "Settings", icon: Settings, exact: false },
