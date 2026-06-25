@@ -21,7 +21,7 @@ export const Route = createFileRoute("/_authenticated/presentation")({
 type Slide = {
   eyebrow?: string;
   title: string;
-  render: () => JSX.Element;
+  render: () => React.ReactNode;
 };
 
 const slides: Slide[] = [
