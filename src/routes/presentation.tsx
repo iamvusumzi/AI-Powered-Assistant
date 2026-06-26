@@ -14,7 +14,7 @@ import {
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 
-export const Route = createFileRoute("/_authenticated/presentation")({
+export const Route = createFileRoute("/presentation")({
   component: PresentationPage,
 });
 
